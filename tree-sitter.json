@@ -19,13 +19,11 @@
     "description": "Rich Presence for RetroAchievement",
     "authors": [
       {
-        "name": "Fraise",
-        "url": ""
+        "name": "Fraise"
       }
     ],
     "links": {
-      "repository": "https://github.com/tree-sitter/tree-sitter-rapresence",
-      "funding": ""
+      "repository": "https://github.com/tree-sitter/tree-sitter-rapresence"
     }
   },
   "bindings": {

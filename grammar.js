@@ -18,53 +18,103 @@ export default grammar({
   rules: {
     source_file: $ => seq(
       repeat($._bloc),
-      $.display
     ),
 
     _bloc: $ => choice(
       $.format,
-      $.lookup
+      $.lookup,
+      $.display
     ),
 
     format: $ => seq(
+      $.format_definition,
+      optional($.format_type_definition),
+    ),
+
+    format_definition: $ => seq(
       'Format', ':',
-      $.identifier, '\n',
+      $.identifier,
+    ),
+
+    format_type_definition: $ => seq(
       'FormatType', '=',
-      $.format_type,
-      '\n'
+      $.format_type
+    ),
+
+    format_type: $ => choice(
+      'SCORE',
+      'FRAMES',
+      'MILLISECS',
+      'SECS',
+      'MINUTES',
+      'SECS_AS_MINS',
+      'VALUE',
+      'UNSIGNED',
+      'TENS',
+      'HUNDREDS',
+      'THOUSANDS',
+      'FIXED1',
+      'FIXED2',
+      'FIXED3',
+      'FLOAT1',
+      'FLOAT2',
+      'FLOAT3',
+      'FLOAT4',
+      'FLOAT5',
+      'FLOAT6'
     ),
 
     lookup: $ => seq(
-      'Lookup', ':',
-      $.identifier, '\n',
+      $.lookup_definition,
       repeat($.lookup_statement),
-      '\n'
+    ),
+
+    lookup_definition: $ => seq(
+      'Lookup',':',
+      $.identifier,
     ),
 
     lookup_statement: $ => seq(
       $.key,
-      /\s/, '=',
+      '=',
       $.value,
-      '\n'
     ),
 
-    key: $ => choice(
-      /0x[0_9a-fA-F]+/,
+    key: $ => $.key_expr,
+
+    key_expr: $ => seq(
+      $.key_item,
+      repeat(seq(',',$.key_item)),
+    ),
+
+    key_item: $ => choice(
+      $.range,
+      $.number
+    ),
+
+    range: $ => seq(
+      $.number, '-', $.number
+    ),
+
+    number: $ => choice(
+      '*',
+      /0x[0-9a-fA-F]+/,
       /[0-9]+/
     ),
 
     value: $ => /[^\n]+/,
 
     display: $ => seq(
-      'Display:',
+      $.display_header,
       repeat($.conditional_display),
       optional($.default_display),
-      '\n'
     ),
+
+    display_header: $ => seq('Display', ':', '\n'),
 
     conditional_display: $ => seq(
       $.condition,
-      repeat(choice($.macro, /./)),
+      repeat(choice($.macro, $.text)),
       '\n'
     ),
 
@@ -82,8 +132,9 @@ export default grammar({
       ')'
     ),
 
-    logic: $ => /[^?\n)].+/,
-    default_display: $ => /[^\n]*/,
+    logic: $ => /[^?)]+/,
+    text: $ => /[^\n@]+/,
+    default_display: $ => /[^?\n][^\n]+/,
     identifier: $ => /[a-zA-Z_][a-zA-Z0-9_]*/,
 
     comment: $ => token(seq('//', /[^\n]*/)),

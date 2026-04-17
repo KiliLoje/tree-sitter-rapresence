@@ -1,12 +1,448 @@
 [
   {
-    "type": "source_file",
+    "type": "condition",
     "named": true,
-    "root": true,
+    "fields": {},
+    "children": {
+      "multiple": false,
+      "required": true,
+      "types": [
+        {
+          "type": "logic",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "conditional_display",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "condition",
+          "named": true
+        },
+        {
+          "type": "macro",
+          "named": true
+        },
+        {
+          "type": "text",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "display",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "conditional_display",
+          "named": true
+        },
+        {
+          "type": "default_display",
+          "named": true
+        },
+        {
+          "type": "display_header",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "display_header",
+    "named": true,
     "fields": {}
   },
   {
-    "type": "hello",
+    "type": "format",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "format_definition",
+          "named": true
+        },
+        {
+          "type": "format_type_definition",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "format_definition",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": false,
+      "required": true,
+      "types": [
+        {
+          "type": "identifier",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "format_type",
+    "named": true,
+    "fields": {}
+  },
+  {
+    "type": "format_type_definition",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": false,
+      "required": true,
+      "types": [
+        {
+          "type": "format_type",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "key",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": false,
+      "required": true,
+      "types": [
+        {
+          "type": "key_expr",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "key_expr",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "key_item",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "key_item",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": false,
+      "required": true,
+      "types": [
+        {
+          "type": "number",
+          "named": true
+        },
+        {
+          "type": "range",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "lookup",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "lookup_definition",
+          "named": true
+        },
+        {
+          "type": "lookup_statement",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "lookup_definition",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": false,
+      "required": true,
+      "types": [
+        {
+          "type": "identifier",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "lookup_statement",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "key",
+          "named": true
+        },
+        {
+          "type": "value",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "macro",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "identifier",
+          "named": true
+        },
+        {
+          "type": "logic",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "number",
+    "named": true,
+    "fields": {}
+  },
+  {
+    "type": "range",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "number",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "source_file",
+    "named": true,
+    "root": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": false,
+      "types": [
+        {
+          "type": "display",
+          "named": true
+        },
+        {
+          "type": "format",
+          "named": true
+        },
+        {
+          "type": "lookup",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "\n",
     "named": false
+  },
+  {
+    "type": "(",
+    "named": false
+  },
+  {
+    "type": ")",
+    "named": false
+  },
+  {
+    "type": "*",
+    "named": false
+  },
+  {
+    "type": ",",
+    "named": false
+  },
+  {
+    "type": "-",
+    "named": false
+  },
+  {
+    "type": ":",
+    "named": false
+  },
+  {
+    "type": "=",
+    "named": false
+  },
+  {
+    "type": "?",
+    "named": false
+  },
+  {
+    "type": "@",
+    "named": false
+  },
+  {
+    "type": "Display",
+    "named": false
+  },
+  {
+    "type": "FIXED1",
+    "named": false
+  },
+  {
+    "type": "FIXED2",
+    "named": false
+  },
+  {
+    "type": "FIXED3",
+    "named": false
+  },
+  {
+    "type": "FLOAT1",
+    "named": false
+  },
+  {
+    "type": "FLOAT2",
+    "named": false
+  },
+  {
+    "type": "FLOAT3",
+    "named": false
+  },
+  {
+    "type": "FLOAT4",
+    "named": false
+  },
+  {
+    "type": "FLOAT5",
+    "named": false
+  },
+  {
+    "type": "FLOAT6",
+    "named": false
+  },
+  {
+    "type": "FRAMES",
+    "named": false
+  },
+  {
+    "type": "Format",
+    "named": false
+  },
+  {
+    "type": "FormatType",
+    "named": false
+  },
+  {
+    "type": "HUNDREDS",
+    "named": false
+  },
+  {
+    "type": "Lookup",
+    "named": false
+  },
+  {
+    "type": "MILLISECS",
+    "named": false
+  },
+  {
+    "type": "MINUTES",
+    "named": false
+  },
+  {
+    "type": "SCORE",
+    "named": false
+  },
+  {
+    "type": "SECS",
+    "named": false
+  },
+  {
+    "type": "SECS_AS_MINS",
+    "named": false
+  },
+  {
+    "type": "TENS",
+    "named": false
+  },
+  {
+    "type": "THOUSANDS",
+    "named": false
+  },
+  {
+    "type": "UNSIGNED",
+    "named": false
+  },
+  {
+    "type": "VALUE",
+    "named": false
+  },
+  {
+    "type": "comment",
+    "named": true,
+    "extra": true
+  },
+  {
+    "type": "default_display",
+    "named": true
+  },
+  {
+    "type": "identifier",
+    "named": true
+  },
+  {
+    "type": "logic",
+    "named": true
+  },
+  {
+    "type": "text",
+    "named": true
+  },
+  {
+    "type": "value",
+    "named": true
   }
 ]
