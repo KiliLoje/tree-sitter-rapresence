@@ -1,6 +1,6 @@
 {
   "name": "tree-sitter-rapresence",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "description": "Rich Presence for RetroAchievement",
   "type": "module",
   "repository": {
