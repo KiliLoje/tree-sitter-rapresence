@@ -10,6 +10,14 @@
 export default grammar({
   name: "rapresence",
 
+  conflicts: $ => [
+    [$.default_display],
+    [$.format_definition],
+    [$.lookup_definition],
+    [$.lookup_statement],
+    [$.format_type_definition],
+  ],
+
   extras: $ => [
     /\s/,
     $.comment
@@ -23,22 +31,26 @@ export default grammar({
     _bloc: $ => choice(
       $.format,
       $.lookup,
-      $.display
+      $.display,
     ),
+
 
     format: $ => seq(
       $.format_definition,
       optional($.format_type_definition),
+      optional($.comment),
     ),
 
     format_definition: $ => seq(
       'Format', ':',
       $.identifier,
+      optional($.comment),
     ),
 
     format_type_definition: $ => seq(
       'FormatType', '=',
-      $.format_type
+      $.format_type,
+      optional($.comment),
     ),
 
     format_type: $ => choice(
@@ -67,17 +79,20 @@ export default grammar({
     lookup: $ => seq(
       $.lookup_definition,
       repeat($.lookup_statement),
+      optional($.comment),
     ),
 
     lookup_definition: $ => seq(
       'Lookup',':',
       $.identifier,
+      optional($.comment),
     ),
 
     lookup_statement: $ => seq(
       $.key,
       '=',
-      $.value,
+      optional($.value),
+      optional($.comment),
     ),
 
     key: $ => $.key_expr,
@@ -102,39 +117,39 @@ export default grammar({
       /[0-9]+/
     ),
 
-    value: $ => /[^\n]+/,
+    value: $ => /[^\n=]+/,
 
-    display: $ => seq(
+    display: $ => prec(1, seq(
       $.display_header,
       repeat($.conditional_display),
       optional($.default_display),
-    ),
+      optional($.comment),
+    )),
 
-    display_header: $ => seq('Display', ':', '\n'),
+    display_header: $ => seq('Display', ':', optional($.comment), '\n'),
 
-    conditional_display: $ => seq(
-      $.condition,
-      repeat(choice($.macro, $.text)),
-      '\n'
-    ),
-
-    condition: $ => seq(
+    conditional_display: $ => prec.right(seq(
       '?',
-      $.logic,
-      '?'
-    ),
+      optional($.logic),
+      '?',
+      $.display_statement,
+      optional($.comment),
+    )),
+
+    default_display: $ => seq($.display_statement, optional($.comment)),
+
+    display_statement: $ => prec.right(repeat1(choice($.macro, $.text))),
 
     macro: $ => seq(
       '@',
       $.identifier,
       '(',
-      $.logic,
+      optional($.logic),
       ')'
     ),
 
     logic: $ => /[^?)]+/,
-    text: $ => /[^\n@]+/,
-    default_display: $ => /[^?\n][^\n]+/,
+    text: $ => token(prec(-1, /[^?@\n][^\n@]*/)),
     identifier: $ => /[a-zA-Z_][a-zA-Z0-9_]*/,
 
     comment: $ => token(seq('//', /[^\n]*/)),
