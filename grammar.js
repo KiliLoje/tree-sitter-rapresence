@@ -86,13 +86,16 @@ export default grammar({
       '\n'
     ),
 
-    lookup_statement: $ => seq(
+    lookup_statement: $ => prec(1, seq(
       $.key,
       '=',
-      optional($.value),
+      choice(
+        $.value,
+        prec(1, blank())
+      ),
       optional($.comment),
       '\n'
-    ),
+    )),
 
     key: $ => seq(
       $.key_item,
@@ -114,7 +117,7 @@ export default grammar({
       /[0-9]+/
     ),
 
-    value: $ => prec(1, /[^\n]+/),
+    value: $ => token(prec(-1, /([^/\n]|\/[^/])+/)),
 
     display: $ => prec(1, seq(
       $.display_header,
@@ -154,9 +157,9 @@ export default grammar({
     ),
 
     logic: $ => /[^?)]*/,
-    text: $ => /[^\n@?][^\n@]*/,
+    text: $ => token(prec(1, /([^@\n?/]|\/[^/])+/)),
     identifier: $ => /[a-zA-Z_][a-zA-Z0-9_]*/,
 
-    comment: $ => prec(-1, token(seq('//', /[^\n]*/))),
+    comment: $ => token(prec(2, seq('//', /[^\n]*/))),
   }
 });
