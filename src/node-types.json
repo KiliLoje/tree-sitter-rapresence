@@ -49,7 +49,7 @@
     }
   },
   {
-    "type": "display",
+    "type": "display_definition",
     "named": true,
     "fields": {},
     "children": {
@@ -65,14 +65,14 @@
           "named": true
         },
         {
-          "type": "display_header",
+          "type": "display_definition_header",
           "named": true
         }
       ]
     }
   },
   {
-    "type": "display_header",
+    "type": "display_definition_header",
     "named": true,
     "fields": {},
     "children": {
@@ -110,7 +110,7 @@
     }
   },
   {
-    "type": "format",
+    "type": "format_definition",
     "named": true,
     "fields": {},
     "children": {
@@ -118,7 +118,7 @@
       "required": true,
       "types": [
         {
-          "type": "format_definition",
+          "type": "format_definition_header",
           "named": true
         },
         {
@@ -129,19 +129,26 @@
     }
   },
   {
-    "type": "format_definition",
+    "type": "format_definition_header",
     "named": true,
-    "fields": {},
+    "fields": {
+      "name": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "identifier",
+            "named": true
+          }
+        ]
+      }
+    },
     "children": {
-      "multiple": true,
-      "required": true,
+      "multiple": false,
+      "required": false,
       "types": [
         {
           "type": "comment",
-          "named": true
-        },
-        {
-          "type": "identifier",
           "named": true
         }
       ]
@@ -155,17 +162,24 @@
   {
     "type": "format_type_definition",
     "named": true,
-    "fields": {},
+    "fields": {
+      "type": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "format_type",
+            "named": true
+          }
+        ]
+      }
+    },
     "children": {
-      "multiple": true,
-      "required": true,
+      "multiple": false,
+      "required": false,
       "types": [
         {
           "type": "comment",
-          "named": true
-        },
-        {
-          "type": "format_type",
           "named": true
         }
       ]
@@ -206,7 +220,7 @@
     }
   },
   {
-    "type": "lookup",
+    "type": "logic",
     "named": true,
     "fields": {},
     "children": {
@@ -214,15 +228,167 @@
       "required": true,
       "types": [
         {
-          "type": "lookup_definition",
-          "named": true
-        },
-        {
-          "type": "lookup_statement",
+          "type": "logic_group",
           "named": true
         }
       ]
     }
+  },
+  {
+    "type": "logic_condition",
+    "named": true,
+    "fields": {
+      "left": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "logic_operand",
+            "named": true
+          }
+        ]
+      },
+      "right": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "logic_operand",
+            "named": true
+          }
+        ]
+      }
+    },
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "logic_flag",
+          "named": true
+        },
+        {
+          "type": "logic_operand",
+          "named": true
+        },
+        {
+          "type": "logic_operator",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "logic_flag",
+    "named": true,
+    "fields": {}
+  },
+  {
+    "type": "logic_group",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "logic_condition",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "logic_mem",
+    "named": true,
+    "fields": {
+      "address": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "logic_mem_address",
+            "named": true
+          }
+        ]
+      },
+      "size": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "logic_mem_size",
+            "named": true
+          }
+        ]
+      },
+      "type": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "logic_mem_type",
+            "named": true
+          }
+        ]
+      }
+    }
+  },
+  {
+    "type": "logic_mem_size",
+    "named": true,
+    "fields": {}
+  },
+  {
+    "type": "logic_mem_type",
+    "named": true,
+    "fields": {}
+  },
+  {
+    "type": "logic_operand",
+    "named": true,
+    "fields": {
+      "mem": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "logic_mem",
+            "named": true
+          }
+        ]
+      },
+      "recall": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "{recall}",
+            "named": false
+          }
+        ]
+      },
+      "value": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "logic_value",
+            "named": true
+          }
+        ]
+      }
+    }
+  },
+  {
+    "type": "logic_operator",
+    "named": true,
+    "fields": {}
+  },
+  {
+    "type": "logic_value",
+    "named": true,
+    "fields": {}
   },
   {
     "type": "lookup_definition",
@@ -233,11 +399,37 @@
       "required": true,
       "types": [
         {
-          "type": "comment",
+          "type": "lookup_definition_header",
           "named": true
         },
         {
-          "type": "identifier",
+          "type": "lookup_statement",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "lookup_definition_header",
+    "named": true,
+    "fields": {
+      "name": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "identifier",
+            "named": true
+          }
+        ]
+      }
+    },
+    "children": {
+      "multiple": false,
+      "required": false,
+      "types": [
+        {
+          "type": "comment",
           "named": true
         }
       ]
@@ -246,21 +438,34 @@
   {
     "type": "lookup_statement",
     "named": true,
-    "fields": {},
+    "fields": {
+      "key": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "key",
+            "named": true
+          }
+        ]
+      },
+      "value": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "value",
+            "named": true
+          }
+        ]
+      }
+    },
     "children": {
-      "multiple": true,
-      "required": true,
+      "multiple": false,
+      "required": false,
       "types": [
         {
           "type": "comment",
-          "named": true
-        },
-        {
-          "type": "key",
-          "named": true
-        },
-        {
-          "type": "value",
           "named": true
         }
       ]
@@ -269,15 +474,22 @@
   {
     "type": "macro",
     "named": true,
-    "fields": {},
+    "fields": {
+      "name": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "identifier",
+            "named": true
+          }
+        ]
+      }
+    },
     "children": {
-      "multiple": true,
+      "multiple": false,
       "required": true,
       "types": [
-        {
-          "type": "identifier",
-          "named": true
-        },
         {
           "type": "logic",
           "named": true
@@ -319,15 +531,15 @@
           "named": true
         },
         {
-          "type": "display",
+          "type": "display_definition",
           "named": true
         },
         {
-          "type": "format",
+          "type": "format_definition",
           "named": true
         },
         {
-          "type": "lookup",
+          "type": "lookup_definition",
           "named": true
         }
       ]
@@ -335,6 +547,22 @@
   },
   {
     "type": "\n",
+    "named": false
+  },
+  {
+    "type": " ",
+    "named": false
+  },
+  {
+    "type": "!=",
+    "named": false
+  },
+  {
+    "type": "%",
+    "named": false
+  },
+  {
+    "type": "&",
     "named": false
   },
   {
@@ -350,6 +578,10 @@
     "named": false
   },
   {
+    "type": "+",
+    "named": false
+  },
+  {
     "type": ",",
     "named": false
   },
@@ -358,11 +590,35 @@
     "named": false
   },
   {
+    "type": "/",
+    "named": false
+  },
+  {
+    "type": "0x",
+    "named": false
+  },
+  {
     "type": ":",
     "named": false
   },
   {
+    "type": "<",
+    "named": false
+  },
+  {
+    "type": "<=",
+    "named": false
+  },
+  {
     "type": "=",
+    "named": false
+  },
+  {
+    "type": ">",
+    "named": false
+  },
+  {
+    "type": ">=",
     "named": false
   },
   {
@@ -371,6 +627,22 @@
   },
   {
     "type": "@",
+    "named": false
+  },
+  {
+    "type": "A",
+    "named": false
+  },
+  {
+    "type": "B",
+    "named": false
+  },
+  {
+    "type": "C",
+    "named": false
+  },
+  {
+    "type": "D",
     "named": false
   },
   {
@@ -426,11 +698,39 @@
     "named": false
   },
   {
+    "type": "G",
+    "named": false
+  },
+  {
+    "type": "H",
+    "named": false
+  },
+  {
     "type": "HUNDREDS",
     "named": false
   },
   {
+    "type": "I",
+    "named": false
+  },
+  {
+    "type": "J",
+    "named": false
+  },
+  {
+    "type": "K",
+    "named": false
+  },
+  {
+    "type": "L",
+    "named": false
+  },
+  {
     "type": "Lookup",
+    "named": false
+  },
+  {
+    "type": "M",
     "named": false
   },
   {
@@ -439,6 +739,30 @@
   },
   {
     "type": "MINUTES",
+    "named": false
+  },
+  {
+    "type": "N",
+    "named": false
+  },
+  {
+    "type": "O",
+    "named": false
+  },
+  {
+    "type": "P",
+    "named": false
+  },
+  {
+    "type": "Q",
+    "named": false
+  },
+  {
+    "type": "R",
+    "named": false
+  },
+  {
+    "type": "S",
     "named": false
   },
   {
@@ -454,11 +778,19 @@
     "named": false
   },
   {
+    "type": "T",
+    "named": false
+  },
+  {
     "type": "TENS",
     "named": false
   },
   {
     "type": "THOUSANDS",
+    "named": false
+  },
+  {
+    "type": "U",
     "named": false
   },
   {
@@ -470,16 +802,48 @@
     "named": false
   },
   {
+    "type": "W",
+    "named": false
+  },
+  {
+    "type": "X",
+    "named": false
+  },
+  {
+    "type": "Z",
+    "named": false
+  },
+  {
+    "type": "^",
+    "named": false
+  },
+  {
+    "type": "_",
+    "named": false
+  },
+  {
+    "type": "b",
+    "named": false
+  },
+  {
     "type": "comment",
     "named": true
+  },
+  {
+    "type": "d",
+    "named": false
   },
   {
     "type": "identifier",
     "named": true
   },
   {
-    "type": "logic",
+    "type": "logic_mem_address",
     "named": true
+  },
+  {
+    "type": "p",
+    "named": false
   },
   {
     "type": "text",
@@ -488,5 +852,13 @@
   {
     "type": "value",
     "named": true
+  },
+  {
+    "type": "{recall}",
+    "named": false
+  },
+  {
+    "type": "~",
+    "named": false
   }
 ]

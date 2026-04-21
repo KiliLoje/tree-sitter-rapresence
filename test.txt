@@ -1,0 +1,12 @@
+//#RP
+
+Lookup:Test
+0=
+1= aaa
+
+Format:OtherTest
+FormatType=VALUE
+
+Display:
+?1=1? Test @Test(K:d0xH0+1_M:{recall})
+Default Display
